@@ -4,44 +4,41 @@ on:
   push:
     branches:
       - main
-  # 建議加上 schedule，確保活動能定時更新，即使沒有新的 push
   schedule:
-    - cron: '0 0 * * *' # 每日午夜執行一次
+    - cron: '0 0 * * *' # 每日午夜執行一次，確保定時更新
   workflow_dispatch:
 
-# 權限：必須有寫入權限才能修改 README.md
 permissions:
-  contents: write
+  contents: write # 確保 Action 有寫入 README.md 的權限
 
 jobs:
   update-readme:
     runs-on: ubuntu-latest
     
-    # 【修正 2：防止 Action 自身提交重複觸發】
-    # 僅當提交者不是 GitHub Bot 時才運行，避免無限循環
+    # 避免 Action 自身的提交重複觸發 Workflow
     if: github.actor != 'github-actions[bot]'
 
     steps:
-      - name: ⬇️ Checkout Repository Code
+      - name: ⬇️ Checkout Repository Code with PAT
         uses: actions/checkout@v4
-        # 使用 PAT Token 進行 Checkout，讓後續操作能讀取私有 repo 的活動
         with:
-          token: ${{ secrets.TOKEN }} # 使用您設定的 PAT Secret
+          # 使用您的 PAT Secret 進行 Checkout，確保有權限進行後續的 Push
+          token: ${{ secrets.TOKEN }} 
           fetch-depth: 0
           
       - name: 🏃‍♂️ Run Activity Log Generator
         uses: TheDanniCraft/activity-log@v1
         with:
-          # 【修正 1：將 GITHUB_USERNAME 移到 with 區塊】
-          # 此 Action 預期 GITHUB_USERNAME 為輸入參數 (input)，而不是環境變數 (env)
-          GITHUB_USERNAME: YiSanChen # 替換為您的實際 GitHub 使用者名稱
+          # 1. 【修正】提供必要的 GITHUB_USERNAME
+          GITHUB_USERNAME: YiSanChen 
 
-          # 這是用於 API 請求的 Token。這裡應該使用您設定的 PAT Secret (TOKEN)
-          TOKEN: ${{ secrets.TOKEN }}
+          # 2. 【修正】Action 要求名為 GITHUB_TOKEN 的輸入，我們將 PAT 傳遞給它
+          GITHUB_TOKEN: ${{ secrets.TOKEN }}
           
-          # 建議加上 SECTION_NAME，確保 Action 知道要替換的區塊
-          SECTION_NAME: activity 
-          
+          # 3. 【修正】Action 的輸入參數名為 README_PATH，而不是 SECTION_NAME
+          # SECTION_NAME 只是用於配置檔案（但這個 Action 沒有這個輸入）
+          # 根據文件，如果您的佔位符是 <!--START_SECTION:activity-->，且在 README.md 根目錄，它會自動偵測，這裡先不加。
+
       - name: 🔄 Commit Updated README
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
@@ -49,6 +46,5 @@ jobs:
           commit_user_name: 'github-actions[bot]'
           commit_user_email: '41898282+github-actions[bot]@users.noreply.github.com'
           files: 'README.md'
-          # 使用預設的 GITHUB_TOKEN，此 Action 提交時會自動使用 Bot 帳號，
-          # 且不會再次觸發 push event，但為確保權限，這裡仍建議使用您的 PAT
+          # 使用您的 PAT Secret 來提交變更
           token: ${{ secrets.TOKEN }}
