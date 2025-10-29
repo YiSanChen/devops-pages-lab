@@ -1,0 +1,33 @@
+name: 🚀 Auto Update Activity Log
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  update-readme:
+    runs-on: ubuntu-latest
+    steps:
+      - name: ⬇️ Checkout Repository Code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          
+      - name: 🏃‍♂️ Run Activity Log Generator
+        uses: TheDanniCraft/activity-log@v1.4.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
+
+      - name: 🔄 Commit Updated README
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "🤖 Auto: Update activity log in README [skip ci]"
+          commit_user_name: 'github-actions[bot]'
+          commit_user_email: '41898282+github-actions[bot]@users.noreply.github.com'
+          files: 'README.md'
+          token: ${{ secrets.GITHUB_TOKEN }}
