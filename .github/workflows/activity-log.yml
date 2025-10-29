@@ -20,7 +20,7 @@ jobs:
           fetch-depth: 0
           
       - name: 🏃‍♂️ Run Activity Log Generator
-        uses: TheDanniCraft/activity-log@v1.4.0
+        uses: TheDanniCraft/activity-log@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
 
