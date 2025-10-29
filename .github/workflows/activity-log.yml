@@ -21,6 +21,7 @@ jobs:
           
       - name: 🏃‍♂️ Run Activity Log Generator
         uses: TheDanniCraft/activity-log@v1
+        GITHUB_USERNAME: YiSanChen
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
 
