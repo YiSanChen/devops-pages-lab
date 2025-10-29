@@ -1,5 +1,5 @@
-title: 專案活動主頁 layout: default
-
-<!-- Jekyll Include：將 README.md 的內容渲染到此處 -->
-
+---
+layout: default
+title: Home
+---
 {% include_relative README.md %}
