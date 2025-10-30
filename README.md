@@ -12,20 +12,17 @@ Workflow: .github/workflows/activity-log.yml
 
 Action: Uses TheDanniCraft/activity-log@v1 to fetch recent GitHub events from the YiSanChen profile.
 
-Injection Point: The log is automatically inserted into the designated placeholder block (<!--START_SECTION:activity-->) within this README.md file.
-
-## 2. Deployment Synchronization & Scheduling (O-Level Hygiene & Rationale)
-
-Controlled Triggering: The workflow trigger on: push has been removed to prevent execution on every source code change. This maintains clean repository hygiene by separating code commits from content generation.
-
-Scheduling Rationale: The workflow is scheduled to run twice daily (8:00 AM and 8:00 PM UTC). This frequency is chosen to maintain activity log freshness without over-consuming build resources.
-
-Low-Risk Deployment: The automated content is rendered on the Live URL via Jekyll's inclusion of this README.md in index.md, making the public site a direct, near real-time reflection of the repository's state.
-
-## 🎯 專案活動紀錄 (Auto-Generated)
-
-<!--START_SECTION:activity-->
-
+Injection Point: The log is automatically inserted into the designated placeholder block (<!--START_SECTION:activity-->
+1. 📝 Committed to [YiSanChen/devops-pages-lab](https://github.com/YiSanChen/devops-pages-lab/commit/395ca996cdae8720b29ab141df88e17da079cfb2)
+2. 📝 Committed to [YiSanChen/devops-pages-lab](https://github.com/YiSanChen/devops-pages-lab/commit/19fb722a49313a2365954ed946d3b5048c4e142e)
+3. 📝 Committed to [YiSanChen/devops-pages-lab](https://github.com/YiSanChen/devops-pages-lab/commit/b6273f178e7c027645441890ce90aa2c85401a5a)
+4. 📝 Committed to [YiSanChen/devops-pages-lab](https://github.com/YiSanChen/devops-pages-lab/commit/e4c7e7fd32b070e001956637937a99b9010f0356)
+5. 📝 Committed to [YiSanChen/devops-pages-lab](https://github.com/YiSanChen/devops-pages-lab/commit/c5de1640fe3e70623bb43f0068e0ed951c2baf81)
+6. 📝 Committed to [YiSanChen/devops-pages-lab](https://github.com/YiSanChen/devops-pages-lab/commit/bb8393998c72116c920f6af4b9ce1285aaf06250)
+7. 📝 Committed to [YiSanChen/devops-pages-lab](https://github.com/YiSanChen/devops-pages-lab/commit/047015a061e7404187ce291a031687b4d07850f1)
+8. 📝 Committed to [YiSanChen/devops-pages-lab](https://github.com/YiSanChen/devops-pages-lab/commit/cc7a872b57b971da189a1c9d77947f948e8b8cb6)
+9. 📝 Committed to [YiSanChen/devops-pages-lab](https://github.com/YiSanChen/devops-pages-lab/commit/5f80d519b2590b184b2281ad6c2a64b75fc71962)
+10. 📝 Committed to [YiSanChen/devops-pages-lab](https://github.com/YiSanChen/devops-pages-lab/commit/ef66a560c561b8fe20473d8cbc4b28aaebaa55a3)
 <!--END_SECTION:activity-->
 
 (The content between the activity markers is automatically updated by the GitHub Action.)
