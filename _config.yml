@@ -1,0 +1,17 @@
+# Base Configuration
+title: DevOps Low-Risk Release Artifact  
+description: >- 
+  Automated deployment of a static site using GitHub Pages, with
+  real-time activity logs integrated via GitHub Actions.
+author: YiSanChen 
+email: b11209051@mail.ntust.edu.tw
+
+# Build Settings
+theme: minima 
+plugins:
+  - jekyll-feed
+
+# Minima theme specific configurations
+minima:
+  social_links:
+    github: YiSanChen
