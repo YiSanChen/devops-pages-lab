@@ -1,43 +1,35 @@
 name: 🚀 Auto Update Activity Log
 
 on:
-  push:
-    branches:
-      - main
+  # 僅保留排程和手動觸發 (workflow_dispatch)，
+  # 移除 on: push 實現更清潔的 CI/CD 流程控制。
   schedule:
-    - cron: '0 0 * * *' # 每日午夜執行一次，確保定時更新
+    # 每日兩次執行：早上 8 點和 晚上 8 點 (UTC)
+    - cron: '0 8,20 * * *' 
   workflow_dispatch:
 
 permissions:
-  contents: write # 確保 Action 有寫入 README.md 的權限
+  contents: write
 
 jobs:
   update-readme:
     runs-on: ubuntu-latest
     
-    # 避免 Action 自身的提交重複觸發 Workflow
+    # 由於移除了 on: push，此 if 條件其實已非必要，但保留它作為防禦性編程 (Defensive Coding) 範例。
     if: github.actor != 'github-actions[bot]'
 
     steps:
       - name: ⬇️ Checkout Repository Code with PAT
         uses: actions/checkout@v4
         with:
-          # 使用您的 PAT Secret 進行 Checkout，確保有權限進行後續的 Push
           token: ${{ secrets.TOKEN }} 
           fetch-depth: 0
           
       - name: 🏃‍♂️ Run Activity Log Generator
         uses: TheDanniCraft/activity-log@v1
         with:
-          # 1. 【修正】提供必要的 GITHUB_USERNAME
           GITHUB_USERNAME: YiSanChen 
-
-          # 2. 【修正】Action 要求名為 GITHUB_TOKEN 的輸入，我們將 PAT 傳遞給它
           GITHUB_TOKEN: ${{ secrets.TOKEN }}
-          
-          # 3. 【修正】Action 的輸入參數名為 README_PATH，而不是 SECTION_NAME
-          # SECTION_NAME 只是用於配置檔案（但這個 Action 沒有這個輸入）
-          # 根據文件，如果您的佔位符是 <!--START_SECTION:activity-->，且在 README.md 根目錄，它會自動偵測，這裡先不加。
 
       - name: 🔄 Commit Updated README
         uses: stefanzweifel/git-auto-commit-action@v5
@@ -46,5 +38,4 @@ jobs:
           commit_user_name: 'github-actions[bot]'
           commit_user_email: '41898282+github-actions[bot]@users.noreply.github.com'
           files: 'README.md'
-          # 使用您的 PAT Secret 來提交變更
           token: ${{ secrets.TOKEN }}
