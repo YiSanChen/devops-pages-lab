@@ -1,23 +1,31 @@
-# DevOps Pages Lab: 低風險發佈作業
+# DevOps Pages Lab: Low-Risk Release Pipeline (O-Level)
 
-## 專案簡介
+This repository serves as a demonstration of static site publishing using GitHub Pages, coupled with an automated CI/CD pipeline built with GitHub Actions to integrate a real-time activity log. This design aims to achieve the "Low-Risk Release" objective by ensuring the publicly deployed artifact is always synchronized with the latest source code activity.
 
-這個專案旨在展示使用 GitHub Pages 部署靜態網站，並透過 GitHub Actions 實現自動化的活動紀錄生成，達成「低風險發佈 (Low-Risk Release)」的學習目標。
+## ⚙️ Automated Pipeline Mechanism (O-Level Documentation)
 
-每次成功的 push 都會觸發 Action 來更新下方的活動紀錄，並自動提交變更，確保站台內容始終與程式碼活動同步。
+This section documents the CI/CD configuration used for automated content generation and controlled deployment synchronization.
 
-## 專案活動紀錄 (Auto-Generated)
+## 1. Automated Content Generation (E-Level Core)
+
+Workflow: .github/workflows/activity-log.yml
+
+Action: Uses TheDanniCraft/activity-log@v1 to fetch recent GitHub events from the YiSanChen profile.
+
+Injection Point: The log is automatically inserted into the designated placeholder block (<!--START_SECTION:activity-->) within this README.md file.
+
+## 2. Deployment Synchronization & Scheduling (O-Level Hygiene & Rationale)
+
+Controlled Triggering: The workflow trigger on: push has been removed to prevent execution on every source code change. This maintains clean repository hygiene by separating code commits from content generation.
+
+Scheduling Rationale: The workflow is scheduled to run twice daily (8:00 AM and 8:00 PM UTC). This frequency is chosen to maintain activity log freshness without over-consuming build resources.
+
+Low-Risk Deployment: The automated content is rendered on the Live URL via Jekyll's inclusion of this README.md in index.md, making the public site a direct, near real-time reflection of the repository's state.
+
+## 🎯 專案活動紀錄 (Auto-Generated)
 
 <!--START_SECTION:activity-->
-1. 📝 Committed to [YiSanChen/devops-pages-lab](https://github.com/YiSanChen/devops-pages-lab/commit/b6273f178e7c027645441890ce90aa2c85401a5a)
-2. 📝 Committed to [YiSanChen/devops-pages-lab](https://github.com/YiSanChen/devops-pages-lab/commit/e4c7e7fd32b070e001956637937a99b9010f0356)
-3. 📝 Committed to [YiSanChen/devops-pages-lab](https://github.com/YiSanChen/devops-pages-lab/commit/c5de1640fe3e70623bb43f0068e0ed951c2baf81)
-4. 📝 Committed to [YiSanChen/devops-pages-lab](https://github.com/YiSanChen/devops-pages-lab/commit/bb8393998c72116c920f6af4b9ce1285aaf06250)
-5. 📝 Committed to [YiSanChen/devops-pages-lab](https://github.com/YiSanChen/devops-pages-lab/commit/047015a061e7404187ce291a031687b4d07850f1)
-6. 📝 Committed to [YiSanChen/devops-pages-lab](https://github.com/YiSanChen/devops-pages-lab/commit/cc7a872b57b971da189a1c9d77947f948e8b8cb6)
-7. 📝 Committed to [YiSanChen/devops-pages-lab](https://github.com/YiSanChen/devops-pages-lab/commit/5f80d519b2590b184b2281ad6c2a64b75fc71962)
-8. 📝 Committed to [YiSanChen/devops-pages-lab](https://github.com/YiSanChen/devops-pages-lab/commit/ef66a560c561b8fe20473d8cbc4b28aaebaa55a3)
-9. 📝 Committed to [YiSanChen/devops-pages-lab](https://github.com/YiSanChen/devops-pages-lab/commit/6a1b5db61846d5ed14bcd1078f060e869ef9f07d)
-10. 📝 Committed to [YiSanChen/devops-pages-lab](https://github.com/YiSanChen/devops-pages-lab/commit/abd38190da37452800942cf3472dfc750647bec0)
+
 <!--END_SECTION:activity-->
 
+(The content between the activity markers is automatically updated by the GitHub Action.)
